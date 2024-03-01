@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+
+    <meta charset="UTF-8">
+    <title>Courses</title>
+</head>
+<body>
+{% if data %}
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Rate</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for object in data %}
+        <tr>
+          <td><a href="{% url 'course_by_id' object.id %}">{{ object.title }}</a></td>
+          <td>{{ object.rate }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>No data available</p>
+{% endif %}
+
+</body>
+
+
+<style>
+
+
+    /* styles.css */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 25px;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+</style>
+</html>

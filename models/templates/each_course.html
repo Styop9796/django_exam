@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdn.metroui.org.ua/current/metro.css">
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+{% if object %}
+    <div class="showdiv">
+    <h2>{{ object.title }}</h2>
+    <p>Rate: {{ object.rate }}</p>
+    <p>Description: {{ object.description }}</p>
+        <div class="ratebuttons">
+                 <button class="ratebtn" data-value="1">1</button>
+                <button class="ratebtn" data-value="2">2</button>
+                <button class="ratebtn" data-value="3">3</button>
+                <button class="ratebtn" data-value="4">4</button>
+                <button class="ratebtn" data-value="5">5</button>
+
+        </div>
+    </div>
+
+
+  <!-- Add more details about the course if needed -->
+{% else %}
+  <p>Course not found</p>
+{% endif %}
+
+
+</body>
+
+<style>
+
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+        .ratebuttons{
+            margin-top: 20px;
+            display: flex;
+            justify-content:space-evenly;
+
+        }
+    .ratebtn{
+        background-color: #a0d585;
+    }
+
+    .showdiv{
+        display: grid;
+            align-items: center;
+        justify-content: center;
+    }
+
+</style>
+<script src="https://cdn.metroui.org.ua/current/metro.js"></script>
+<script>
+
+
+        document.querySelectorAll('.ratebtn').forEach(function (button) {
+        button.addEventListener('click', function () {
+            // Get the data-value attribute of the clicked button
+            const buttonValue = this.getAttribute('data-value');
+
+            // Create a FormData object and append the rate value
+            const formData = new FormData();
+            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+            formData.append('rate', buttonValue);
+            console.log(formData)
+            // Send a POST request to the backend with the FormData
+            fetch(`${window.location.href}`, {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => {
+                // Handle the response from the backend if needed
+                console.log('Rating submitted successfully');
+                window.location.href = '/'; // Replace '/main-url' with your actual main URL
+
+            })
+            .catch(error => {
+                console.error('Error submitting rating:', error);
+            });
+        });
+    });
+</script>
+</html>
