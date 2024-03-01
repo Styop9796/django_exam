@@ -9,9 +9,6 @@ class CourseView(View):
         courses = Course.objects.all()
         return render(request,'courses.html',{"data":courses})
 
-
-
-
 class CourseDetailView(View):
     def get(self,request,course_id):
         course = Course.objects.get(id=course_id)
